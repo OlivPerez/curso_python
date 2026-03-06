@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow-xl p-6">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <h1 class="text-3xl font-bold text-gray-800">lista de empleados</h1>
+        
+        <form action="{{url_for('buscar')}}" method="get" class="flex gap-2 w-full md:w-auto">
+            <input type="text" name="q"
+            placeholder="buscar por nombre, apellido o cedula"
+            value="{{busqueda if busqueda else ''}}"
+            class="flex-1 md:w-80 px-4 py-2 border border-gray-300 rounded-lg
+            focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg
+            hover:bg-indigo-700 transition font-semibold">buscar</button>
+            {% if busqueda %}
+            <a href="{{url_for('index')}}" class="bg-gray-500 text-white px-4 py-2 rounded-lg
+            hover:bg-gray-600 transition">limpiar</a>
+            {% endif %}
+        </form>
+    </div>
+
+    {% if busqueda %}
+    <p class="text-gray-600 mb-4">
+        resultados de busqueda para <strong>"{{ busqueda }}"</strong>
+        ({{ empleados|length}} encontrados)
+    </p>
+    {% endif %}
+
+    {% if empleados %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wide"></th>
+                </tr>
+            </thead>
+        </table>
+
+    </div>
+</div>
